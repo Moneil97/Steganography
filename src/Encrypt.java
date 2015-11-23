@@ -42,36 +42,10 @@ public class Encrypt {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
-		//Decode
-		
-		x=0;
-		y=0;
-		for (int i=0; i < message.length(); i++){
-			byte b = 0;
-			String s = "";
-				for (int j=7; j >= 0; j--){
-					b = (byte)((img.getRGB(x,y) >> 31) & 1);
-					s += b;
-					System.out.print(b);
-					x++;
-					
-					if (x > img.getWidth()){
-						x=0;
-						y++;
-						if (y > img.getHeight())
-							System.err.println("Out of space");
-					}
-				}
-				System.out.print(" : " + Integer.parseInt(s, 2) + " : " + (char)Integer.parseInt(s, 2));
-				System.out.println("");
-		}
-		
 
 	}
 	
-	private static void say(Object s){
+	public static void say(Object s){
 		System.out.println(s);
 	}
 
