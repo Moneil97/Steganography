@@ -15,18 +15,12 @@ public class Decrypt {
 			e.printStackTrace();
 		}
 		
-		int messageLength = "Hello There, this is a secret message".length();
-		
-		
-		int x=0, y=0;
+		int x=0, y=0, c=0;
 		String message = "";
-		for (int i=0; i < messageLength; i++){
-			byte b = 0;
+		do{
 			String s = "";
-				for (int j=7; j >= 0; j--){
-					b = (byte)((img.getRGB(x,y) >> 31) & 1);
-					s += b;
-					System.out.print(b);
+				for (int j=0; j < 8; j++){
+					s += ((img.getRGB(x,y) >> 31) & 1);
 					x++;
 					
 					if (x > img.getWidth()){
@@ -36,13 +30,13 @@ public class Decrypt {
 							System.err.println("Out of space");
 					}
 				}
-				int c = Integer.parseInt(s, 2);
-				System.out.print(" : " + c + " : " + (char)c);
+				c = Integer.parseInt(s, 2);
+				System.out.print(s + " : " + c + " : " + (char)c);
 				message += (char) c;
 				System.out.println("");
-		}
+		}while (c != (char)0);
 		
-		say("Message: " + message);
+		say("Message: " + message.substring(0, message.length()-1));
 	}
 	
 	public static void say(Object s){
