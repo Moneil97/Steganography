@@ -1,6 +1,8 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -15,7 +17,19 @@ public class Encrypt {
 			e.printStackTrace();
 		}
 		
-		String message = "Hello there, this is a secret message" + (char)0; //Add Null Terminator
+		//String message = "Hello there, this is a secret message" + (char)0; //Add Null Terminator
+		
+		String message = "";
+		
+		try {
+			Scanner scan = new Scanner(new File("src/input2.txt"));
+			while (scan.hasNextLine())
+				message += scan.nextLine();
+			message +=(char)0;
+			scan.close();
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		
 		int x=0,y=0;
 		boolean end = false;
@@ -24,15 +38,15 @@ public class Encrypt {
 			for (int j=7; j >= 0; j--){ //Loops though each bit of the byte
 
 				if (((b >> j) & 1) == 1)//if bit == 1
-					img.setRGB(x, y, img.getRGB(x,y) | (1 << 31)); //set 32nd bit to 1
+					img.setRGB(x, y, img.getRGB(x,y) | (1 << 32)); //set 32nd bit to 1
 				else //if bit == 0
-					img.setRGB(x, y, img.getRGB(x,y) & ~ (1 << 31)); //set 32nd bit to 0
+					img.setRGB(x, y, img.getRGB(x,y) & ~ (1 << 32)); //set 32nd bit to 0
 				x++;
 				
-				if (x > img.getWidth()){ 
+				if (x >= img.getWidth()){ 
 					x=0; //Jump to next row if at the end
 					y++;
-					if (y > img.getHeight()){
+					if (y >= img.getHeight()){
 						System.err.println("Message too large");
 						end = true;
 						break;

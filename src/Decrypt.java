@@ -20,20 +20,20 @@ public class Decrypt {
 		do{
 			String s = "";
 				for (int j=0; j < 8; j++){
-					s += ((img.getRGB(x,y) >> 31) & 1);
+					s += ((img.getRGB(x,y) >> 32) & 1);
 					x++;
 					
-					if (x > img.getWidth()){
+					if (x >= img.getWidth()){
 						x=0;
 						y++;
-						if (y > img.getHeight())
+						say(y);
+						if (y >= img.getHeight())
 							System.err.println("Out of space");
 					}
 				}
 				c = Integer.parseInt(s, 2);
-				System.out.print(s + " : " + c + " : " + (char)c);
+				//System.out.println(s + " : " + c + " : " + (char)c);
 				message += (char) c;
-				System.out.println("");
 		}while (c != (char)0);
 		
 		say("Message: " + message.substring(0, message.length()-1));
