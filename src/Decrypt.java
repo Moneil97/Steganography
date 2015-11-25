@@ -20,7 +20,7 @@ public class Decrypt {
 		do{
 			String s = "";
 				for (int j=0; j < 8; j++){
-					s += ((img.getRGB(x,y) >> 32) & 1);
+					s += ((img.getRGB(x,y) >> 0) & 1);
 					x++;
 					
 					if (x >= img.getWidth()){

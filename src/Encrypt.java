@@ -17,19 +17,19 @@ public class Encrypt {
 			e.printStackTrace();
 		}
 		
-		//String message = "Hello there, this is a secret message" + (char)0; //Add Null Terminator
+		String message = "Hello there, this is a secret message" + (char)0; //Add Null Terminator
 		
-		String message = "";
+//		String message = "";
 		
-		try {
-			Scanner scan = new Scanner(new File("src/input2.txt"));
-			while (scan.hasNextLine())
-				message += scan.nextLine();
-			message +=(char)0;
-			scan.close();
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
+//		try {
+//			Scanner scan = new Scanner(new File("src/input2.txt"));
+//			while (scan.hasNextLine())
+//				message += scan.nextLine();
+//			message +=(char)0;
+//			scan.close();
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//		}
 		
 		int x=0,y=0;
 		boolean end = false;
@@ -38,9 +38,9 @@ public class Encrypt {
 			for (int j=7; j >= 0; j--){ //Loops though each bit of the byte
 
 				if (((b >> j) & 1) == 1)//if bit == 1
-					img.setRGB(x, y, img.getRGB(x,y) | (1 << 32)); //set 32nd bit to 1
+					img.setRGB(x, y, img.getRGB(x,y) | (1 << 0)); //set 32nd bit to 1
 				else //if bit == 0
-					img.setRGB(x, y, img.getRGB(x,y) & ~ (1 << 32)); //set 32nd bit to 0
+					img.setRGB(x, y, img.getRGB(x,y) & ~ (1 << 0)); //set 32nd bit to 0
 				x++;
 				
 				if (x >= img.getWidth()){ 
