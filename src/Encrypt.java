@@ -38,9 +38,9 @@ public class Encrypt {
 			for (int j=7; j >= 0; j--){ //Loops though each bit of the byte
 
 				if (((b >> j) & 1) == 1)//if bit == 1
-					img.setRGB(x, y, img.getRGB(x,y) | (1 << 0)); //set 32nd bit to 1
+					img.setRGB(x, y, img.getRGB(x,y) | 1); //set 32nd bit to 1
 				else //if bit == 0
-					img.setRGB(x, y, img.getRGB(x,y) & ~ (1 << 0)); //set 32nd bit to 0
+					img.setRGB(x, y, img.getRGB(x,y) &~ 1); //set 32nd bit to 0
 				x++;
 				
 				if (x >= img.getWidth()){ 
