@@ -2,6 +2,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
@@ -38,9 +40,9 @@ public class Encrypt {
 			for (int j=7; j >= 0; j--){ //Loops though each bit of the byte
 
 				if (((b >> j) & 1) == 1)//if bit == 1
-					img.setRGB(x, y, img.getRGB(x,y) | 1); //set 32nd bit to 1
+					img.setRGB(x, y, img.getRGB(x,y) | 1); //set rightmost bit to 1
 				else //if bit == 0
-					img.setRGB(x, y, img.getRGB(x,y) &~ 1); //set 32nd bit to 0
+					img.setRGB(x, y, img.getRGB(x,y) &~ 1); //set rightmost bit to 0
 				x++;
 				
 				if (x >= img.getWidth()){ 
@@ -62,6 +64,19 @@ public class Encrypt {
 			e.printStackTrace();
 		}
 
+	}
+	
+	private static int setLastBits(int num, int val, int digits){
+		
+		for (int i=0; i < digits; i++, val = val>>1){
+			
+			if ((val&1)==1)
+				num = (num | (1 << i));
+			else
+				num = num &~ (1 << i);
+		}
+			
+			return num;
 	}
 	
 	public static void say(Object s){
