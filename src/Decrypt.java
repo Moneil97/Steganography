@@ -1,5 +1,6 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -15,28 +16,50 @@ public class Decrypt {
 			e.printStackTrace();
 		}
 		
-		int x=0, y=0, c=0;
-		String message = "";
-		do{
-			String s = "";
+		FileWriter writer = null;
+		try {
+			writer = new FileWriter(new File("src/output.txt"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		boolean end = false;
+		int x=1, y=0, c=0, k=0;
+		//String message = "";
+		try{
+			while(!end){
+				String s = "";
 				for (int j=0; j < 8; j++){
-					s += (img.getRGB(x,y) & 1);
-					x++;
 					
-					if (x >= img.getWidth()){
-						x=0;
-						y++;
-						say(y);
-						if (y >= img.getHeight())
-							System.err.println("Out of space");
+					s += ((img.getRGB(x,y)>>(8*k))& 1);
+					k++;
+					if (k == 3){
+						k=0;
+						x++;
+						if (x >= img.getWidth()){ 
+							x=0; //Jump to next row if at the end
+							y++;
+							if (y >= img.getHeight()){
+								System.err.println("Message too large");
+								end = true;
+								break;
+							}
+						}
 					}
 				}
 				c = Integer.parseInt(s, 2);
-				//System.out.println(s + " : " + c + " : " + (char)c);
-				message += (char) c;
-		}while (c != (char)0);
-		
-		say("Message: " + message.substring(0, message.length()-1));
+				if (c != (char)0){
+					writer.write((char) c);
+				}
+				else{
+					writer.close();
+					break;
+				}
+			}
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void say(Object s){
