@@ -27,7 +27,7 @@ public class Encrypt {
 			Scanner scan = new Scanner(new File("src/Shakespeare.txt"));
 			int a=0;
 			while (scan.hasNextLine() && a < 100){
-				message += scan.nextLine();
+				message += scan.nextLine() + "\n";
 				say(a++);
 			}
 			message +=(char)0;
