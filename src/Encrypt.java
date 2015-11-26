@@ -22,8 +22,13 @@ public class Encrypt {
 		//String message = "Hello there, this is a secret message" + (char)0; //Add Null Terminator
 		
 		String message = "";
+		long messageBits = 0;// = message.length()*8; 
 		try {
 			//Scanner scan = new Scanner(new File("src/input2.txt"));
+			
+			File f = new File("src/Shakespeare.txt");
+			messageBits = f.length() *8; 
+			
 			Scanner scan = new Scanner(new File("src/Shakespeare.txt"));
 			int a=0;
 			while (scan.hasNextLine() && a < 100){
@@ -34,13 +39,14 @@ public class Encrypt {
 			scan.close();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
+			System.exit(0);
 		}
 		
-		int messageBits = message.length()*8; 
+		//int messageBits = message.length()*8; 
 		say("Bits: " + messageBits);
-		int imageSize = img.getWidth() * img.getHeight() * 3;
+		long imageSize = img.getWidth() * img.getHeight() * 3;
 		say("Image size: " + imageSize);
-		int bitsPerByteNeeded = (int) messageBits/(imageSize-1)+1; //-1 to account for number added pixel 0,0
+		int bitsPerByteNeeded = (int) (messageBits/(imageSize-1)+1); //-1 to account for number added pixel 0,0
 		
 		if (bitsPerByteNeeded > 8){
 			System.err.println("image too small");
